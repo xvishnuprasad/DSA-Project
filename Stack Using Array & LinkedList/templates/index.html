@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Stack Operations</title>
+</head>
+<body class="bg-slate-900 text-white">
+    <div class="container mx-auto border-t border-blue-600">
+        <div class="flex justify-center items-center h-screen">
+            <div class="xl:w-1/3 lg:w-1/2 md:w-2/3 w-3/4">
+                <div id="find" class="mb-10">
+                    <h1 class="text-2xl font-bold text-center">Stack Operations</h1>
+                </div>
+
+                <div class="bg-slate-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-blue-600">
+                    <h2 class="text-xl font-bold">Array Stack</h2>
+                    <div class="mb-4">
+                        <label class="block text-slate-50 text-sm font-bold mb-2" for="arrayElement">Element:</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="arrayElement" type="text" placeholder="Enter value" />
+                    </div>
+                    <div class="flex items-center justify-end mb-4">
+                        <button class="bg-slate-50 hover:bg-blue-500 hover:text-slate-50 text-slate-900 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="pushArray()">Push</button>
+                        <button class="bg-slate-50 hover:bg-red-500 hover:text-slate-50 text-slate-900 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2" type="button" onclick="popArray()">Pop</button>
+                    </div>
+                    <h3 class="text-lg font-semibold">Current Stack:</h3>
+                    <ul id="arrayStack" class="list-disc pl-5 transition-all duration-300 ease-in-out"></ul>
+                    <p id="arrayPoppedMessage" class="text-green-500 mt-2"></p>
+                </div>
+
+                <div class="bg-slate-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-blue-600">
+                    <h2 class="text-xl font-bold">Linked List Stack</h2>
+                    <div class="mb-4">
+                        <label class="block text-slate-50 text-sm font-bold mb-2" for="linkedListElement">Element:</label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="linkedListElement" type="text" placeholder="Enter value" />
+                    </div>
+                    <div class="flex items-center justify-end mb-4">
+                        <button class="bg-slate-50 hover:bg-blue-500 hover:text-slate-50 text-slate-900 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" onclick="pushLinkedList()">Push</button>
+                        <button class="bg-slate-50 hover:bg-red-500 hover:text-slate-50 text-slate-900 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ml-2" type="button" onclick="popLinkedList()">Pop</button>
+                    </div>
+                    <h3 class="text-lg font-semibold">Current Stack:</h3>
+                    <ul id="linkedListStack" class="list-disc pl-5 transition-all duration-300 ease-in-out"></ul>
+                    <p id="linkedListPoppedMessage" class="text-green-500 mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center bg-slate-800 text-sm p-4 bottom-0 border-t border-blue-600 w-full">
+        Made ❤️ by Vishnu (RA2311026010408)
+    </footer>
+
+    <script>
+        async function pushArray() {
+            const data = document.getElementById('arrayElement').value;
+            const response = await fetch('/array/push', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: data })
+            });
+            const updatedStack = await response.json();
+            displayArrayStack(updatedStack);
+            document.getElementById('arrayElement').value = ''; // Clear input field
+        }
+
+        async function popArray() {
+            const response = await fetch('/array/pop', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await response.json();
+            displayArrayStack(result.stack);
+            document.getElementById('arrayPoppedMessage').innerText = result.popped ? `Popped: ${result.popped}` : 'Stack is empty!';
+        }
+
+        async function pushLinkedList() {
+            const data = document.getElementById('linkedListElement').value;
+            const response = await fetch('/linkedlist/push', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data: data })
+            });
+            const updatedStack = await response.json();
+            displayLinkedListStack(updatedStack);
+            document.getElementById('linkedListElement').value = ''; // Clear input field
+        }
+
+        async function popLinkedList() {
+            const response = await fetch('/linkedlist/pop', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await response.json();
+            displayLinkedListStack(result.stack);
+            document.getElementById('linkedListPoppedMessage').innerText = result.popped ? `Popped: ${result.popped}` : 'Stack is empty!';
+        }
+
+        function displayArrayStack(stack) {
+            const stackContainer = document.getElementById('arrayStack');
+            stackContainer.innerHTML = ''; // Clear current list
+            stack.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = item;
+                stackContainer.appendChild(li);
+            });
+        }
+
+        function displayLinkedListStack(stack) {
+            const stackContainer = document.getElementById('linkedListStack');
+            stackContainer.innerHTML = ''; // Clear current list
+            stack.forEach(item => {
+                const li = document.createElement('li');
+                li.innerText = item;
+                stackContainer.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
