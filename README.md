@@ -1,6 +1,3 @@
-Here's the README.md without the project structure section:
-
-```markdown
 # DSA Project
 Python implementation of Data Structures and Algorithms with web interface for Linked List and Stack operations.
 
