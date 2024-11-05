@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doubly Linked List Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 8px;
+            width: 60%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .form-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-group input[type="text"], .form-group input[type="number"] {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Doubly Linked List Elements</h1>
+
+        <!-- Form to append elements to the linked list -->
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label for="element">Add Element (Append):</label>
+                <input type="text" id="element" name="element" required>
+            </div>
+            <input type="submit" name="add_element" value="Add">
+        </form>
+
+        <!-- Form to insert elements at a specific position -->
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label for="insert_element">Insert Element:</label>
+                <input type="text" id="insert_element" name="insert_element" required>
+            </div>
+            <div class="form-group">
+                <label for="position">At Position:</label>
+                <input type="number" id="position" name="position" required>
+            </div>
+            <input type="submit" name="insert_element" value="Insert">
+        </form>
+
+        <!-- Form to delete elements from the linked list -->
+        <form action="/" method="POST">
+            <div class="form-group">
+                <label for="delete_element">Delete Element (by value):</label>
+                <input type="text" id="delete_element" name="delete_element" required>
+            </div>
+            <input type="submit" name="delete_element" value="Delete">
+        </form>
+
+        <h2>Current List:</h2>
+        <ul>
+            {% for item in linked_list_data %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
